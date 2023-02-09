@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\DishRepository;
+use App\Repository\MenuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DishRepository::class)]
-class Dish
+#[ORM\Entity(repositoryClass: MenuRepository::class)]
+class Menu
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,37 +16,25 @@ class Dish
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'Dish')]
-    private Collection $Menu;
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
+    #[ORM\ManyToMany(targetEntity: Dish::class, inversedBy: 'Menu')]
+    private Collection $Dish;
 
     public function __construct()
     {
-        $this->Menu = new ArrayCollection();
+        $this->Dish = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -73,29 +61,38 @@ class Dish
         return $this;
     }
 
-    /**
-     * @return Collection<int, Menu>
-     */
-    public function getMenu(): Collection
+    public function getType(): ?string
     {
-        return $this->Menu;
+        return $this->type;
     }
 
-    public function addMenu(Menu $menu): self
+    public function setType(string $type): self
     {
-        if (!$this->Menu->contains($menu)) {
-            $this->Menu->add($menu);
-            $menu->addDish($this);
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dish>
+     */
+    public function getDish(): Collection
+    {
+        return $this->Dish;
+    }
+
+    public function addDish(Dish $dish): self
+    {
+        if (!$this->Dish->contains($dish)) {
+            $this->Dish->add($dish);
         }
 
         return $this;
     }
 
-    public function removeMenu(Menu $menu): self
+    public function removeDish(Dish $dish): self
     {
-        if ($this->Menu->removeElement($menu)) {
-            $menu->removeDish($this);
-        }
+        $this->Dish->removeElement($dish);
 
         return $this;
     }
