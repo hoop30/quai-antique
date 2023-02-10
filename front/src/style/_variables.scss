@@ -1,0 +1,44 @@
+// colors
+
+:root {
+    --black: #000;
+    --black60: hsla(0, 0%, 0%, 0.6);
+    --darkBrown: #684E2B;
+    --blackBean: #421A10;
+    --white: #FAFAFA;
+    --link: #275C9A;
+}
+
+// fonts
+
+// font-family: 'Sacramento', cursive;
+// font-family: 'Mukta Vaani', sans-serif;
+
+h1, h2, h3, button {
+    font-family: 'Sacramento', cursive;
+    text-align: center;
+}
+p, a {
+    font-family: 'Mukta Vaani', sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: var(--darkBrown);
+    font-size: 40px;
+}
+
+h2 {
+    color: var(--darkBrown);
+    font-size: 32px;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+button {
+    border-radius: 10px;
+}
