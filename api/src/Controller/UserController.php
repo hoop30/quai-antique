@@ -24,7 +24,7 @@ class UserController extends AbstractController
             $response = $userRepository->findOneBy([
                 'id' => $id
             ]);
-
+            
         } else {
             $userToConect = $userRepository->findOneBy([
                 'email' => $email

@@ -6,9 +6,9 @@ export default function PrivateRoute({ children }) {
 
   const { currentUser } = useContext(UserContext)
 
-  console.log(currentUser);
+  console.log(currentUser[3]);
 
-  if (currentUser !== 'admin') {
+  if (!currentUser[3].includes('ROLE_ADMIN')) {
     return <Navigate  to="/"/>
   } 
 

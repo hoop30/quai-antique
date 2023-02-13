@@ -18,10 +18,8 @@ export function UserContextProvider(props) {
     }
   }, [])
   
-  
   // connect user
   function connection(user) {
-    console.log(user);
     setCurrentUser([user.name, user.email, user.Reservation, user.roles])
     localStorage.setItem('userId', user.id);
     setLoadingData(false)
@@ -36,6 +34,7 @@ export function UserContextProvider(props) {
     setCurrentUser(null)
     localStorage.removeItem('userId');
   }
+
   // Modal show state
   const [modalState, setModalState] = useState({
     signUpModal: false,

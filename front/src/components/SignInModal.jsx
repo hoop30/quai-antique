@@ -6,7 +6,7 @@ import Loading from "./Loading";
 
 export default function SignInModal() {
 
-    const { modalState, toggleModals, connection, currentUser } = useContext(UserContext)
+    const { modalState, toggleModals, connection } = useContext(UserContext)
     const [validation, setValidation] = useState("")
     const [loading, setLoading] = useState(false);
     const inputs = useRef([])
@@ -25,7 +25,6 @@ export default function SignInModal() {
             connection(user)
             toggleModals("close")
         }
-
         setLoading(false)
     };
 
