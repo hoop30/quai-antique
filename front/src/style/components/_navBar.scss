@@ -12,15 +12,19 @@
         width: auto;
     }
 
+    .current-user {
+        color: var(--white);
+    }
+
     nav {
         z-index: 100;
-        
+
         .navbar-menu {
             transform: translate(100%, 40px);
             position: absolute;
             transition: 0.5s ease-out;
             display: flex;
-            justify-content:center;
+            justify-content: center;
             align-items: center;
             background: var(--blackBean);
             padding: 25px 20px;
@@ -38,6 +42,15 @@
                 padding: 10px;
                 background: var(--black);
                 border-radius: 5px;
+
+                li > button {
+                    transition: color 0.3s;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: var(--link);
+                    }
+                }
             }
 
             &.show {

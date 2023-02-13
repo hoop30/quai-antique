@@ -1,10 +1,14 @@
-export default function GetUser(set) {
+export default async function GetUser(email, password) {
 
-    fetch('http://localhost:5000/user')
+    return fetch(`http://localhost:5000/user?email=${email}&pdw=${password}`)
         .then(response => { return response.json() })
-        .then(data => {
-            if (set) {
-                set(data)
-            }
-        })
+        .then(data => data)
+
+    // fetch('http://localhost:5000/user')
+    //     .then(response => { return response.json() })
+    //     .then(data => {
+    //         if (set) {
+    //             set(data)
+    //         }
+    //     })
 }

@@ -4,17 +4,19 @@ import logo from '../assets/img/logo-quai-antique.png'
 
 export default function NavBar() {
 
-    const { toggleModals, currentUser, setCurrentUser } = useContext(UserContext)
+    const { toggleModals, currentUser, disconnect } = useContext(UserContext)
     const [menu, setMenu] = useState(false)
     
     // Set the Btn LogIn/LogOut
     function log() {
-        currentUser === null ? toggleModals("signIn") : setCurrentUser()
+        currentUser === null ? toggleModals("signIn") : disconnect()
     }
-
+    
+    console.log(currentUser);
     return (
         <div className='navbar'>
             <img className="logo-qa" src={logo} alt="Quai Antique" width='100' height='30' />
+            {currentUser && <div className="current-user">Bienvenue {currentUser[0]}</div>}
             <nav>
                 <div className={menu ? 'navbar-menu show' : 'navbar-menu'}>
                     <ul>

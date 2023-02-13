@@ -8,6 +8,16 @@ export function UserContextProvider(props) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loadingData, setLoadingData] = useState(false);
   
+  // connect user
+  function connection(user) {
+    console.log(user);
+    setCurrentUser([user.name, user.email, user.Reservation, user.roles])
+  }
+
+  //disconnect user
+  function disconnect() {
+    setCurrentUser(null)
+  }
   // Modal show state
   const [modalState, setModalState] = useState({
     signUpModal: false,
@@ -37,8 +47,27 @@ export function UserContextProvider(props) {
   }
 
   return (
-    <UserContext.Provider value={{modalState, toggleModals, currentUser, setCurrentUser}}>
+    <UserContext.Provider value={{modalState, toggleModals, currentUser, connection, disconnect}}>
       {!loadingData && props.children}
     </UserContext.Provider>
   )
 }
+
+// Where it's used
+/*
+    import { useContext } from 'react'
+    import { ThemeContext } from './    /ThemeContext'
+
+    const {Theme} = useContext(ThemeContext)
+
+    {Theme}
+*/
+
+// For parents
+/*
+import ThemeContextProvider from './    /ThemeContext'
+
+    <ThemeContextProvider>
+        Children here
+    </ThemeContextProvider>
+*/

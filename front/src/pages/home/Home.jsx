@@ -3,6 +3,7 @@ import restaurant from '../../assets/img/quai-antique.jpg'
 
 export default function Home() {
 
+
     return (
         <>
             <header className='home-header'>

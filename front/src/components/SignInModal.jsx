@@ -1,101 +1,94 @@
 import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { IoCloseOutline } from 'react-icons/io5'
+import UserMatch from "../utils/UserMatch";
+import Loading from "./Loading";
 
 export default function SignInModal() {
 
-  const { modalState, toggleModals, signIn } = useContext(UserContext)
-  const [validation, setValidation] = useState("")
-  const inputs = useRef([])
-  inputs.current = []
-  const formRef = useRef()
+    const { modalState, toggleModals, connection, currentUser } = useContext(UserContext)
+    const [validation, setValidation] = useState("")
+    const [loading, setLoading] = useState(false);
+    const inputs = useRef([])
+    inputs.current = []
+    const formRef = useRef()
 
-  // Store form input value on any change
-  const addInputs = (el) => {
+    // Send form and reset input value, or show error message
+    async function handleForm(e) {
+        e.preventDefault()
+        setLoading(true)
+        const form = document.signIn
 
-    if (el && !inputs.current.includes(el)) {
-      inputs.current.push(el)
+        const user = await UserMatch(form, setValidation)
+        
+        if (user) {
+            connection(user)
+            toggleModals("close")
+        }
+
+        setLoading(false)
+    };
+
+    const closeModal = () => {
+        setValidation("")
+        toggleModals("close")
     }
-  }
 
-  // Send form and reset input value, or show error message
-  const handleForm = async (e) => {
-    e.preventDefault()
+    return (
+        <>
+            {modalState.signInModal && (
+                <div className="modal">
+                    <div onClick={closeModal} className="overlay">
+                    </div>
+                    <div className="modal-box">
 
-    try {
-      await signIn(
-        inputs.current[0].value,
-        inputs.current[1].value
-      )
+                        <div className="modal-header">
+                            <h4 className="modal-title">Connection</h4>
+                        </div>
 
-      setValidation("");
-      toggleModals("close")
-    } catch {
-      setValidation("Email and/or password incorrect")
-    }
-  };
+                        <div className="modal-body">
+                            <button onClick={closeModal} className="btn-close-modal">
+                                <IoCloseOutline size="2.5em" />
+                            </button>
+                            <form ref={formRef} onSubmit={handleForm} className="sign-up-form" name='signIn'>
+                                <div className="input">
+                                    <label htmlFor="signUpEmail">Email</label>
+                                    <input
+                                        name="email"
+                                        required
+                                        type="email"
+                                        className="form-control"
+                                        id="signUpEmail"
+                                        placeholder="example@mail.fr"
+                                    />
+                                </div>
 
-  const closeModal = () => {
-    setValidation("")
-    toggleModals("close")
-  }
+                                <div className="input">
+                                    <label htmlFor="signUpPwd">Mot de passe</label>
+                                    <input
+                                        name="password"
+                                        required
+                                        type="password"
+                                        className="form-control"
+                                        id="signUpPwd"
+                                        placeholder="Password"
+                                    />
+                                </div>
 
-  return (
-    <>
-      {modalState.signInModal && (
-        <div className="modal">
-          <div onClick={closeModal} className="overlay">
-          </div>
-          <div className="modal-box">
+                                <p className="text-danger mt-1">{validation}</p>
 
-            <div className="modal-header">
-              <h4 className="modal-title">Connection</h4>
-            </div>
+                                {/* switch to signUp modal */}
+                                <div className="modal-switch">
+                                    <button onClick={() => toggleModals("signUp")}>Pas de Compte?</button>
+                                </div>
 
-            <div className="modal-body">
-              <button onClick={closeModal} className="btn-close-modal">
-                <IoCloseOutline size="2.5em" />
-              </button>
-              <form ref={formRef} onSubmit={handleForm} className="sign-up-form">
-                <div className="input">
-                  <label htmlFor="signUpEmail">Email</label>
-                  <input
-                    ref={addInputs}
-                    name="email"
-                    required
-                    type="email"
-                    className="form-control"
-                    id="signUpEmail"
-                    placeholder="example@mail.fr"
-                  />
+                                
+                                {loading ? <Loading /> : <button className="btn-signin">Connection</button>}
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-                <div className="input">
-                  <label htmlFor="signUpPwd">Mot de passe</label>
-                  <input
-                    ref={addInputs}
-                    name="pwd"
-                    required
-                    type="password"
-                    className="form-control"
-                    id="signUpPwd"
-                    placeholder="Password"
-                  />
-                </div>
-                
-                <p className="text-danger mt-1">{validation}</p>
-
-                {/* switch to signUp modal */}
-                <div className="modal-switch">
-                  <button onClick={() => toggleModals("signUp")}>Pas de Compte?</button>
-                </div>
-
-                <button className="btn-signin">Connection</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  )
+            )}
+        </>
+    )
 }

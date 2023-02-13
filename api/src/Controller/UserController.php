@@ -12,24 +12,30 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'user_get', methods:["GET"])]
+    #[Route('/user', name: 'user_get', methods: ["GET"])]
     public function userGet(UserRepository $userRepository, Request $request)
     {
-        $select = $request->query->get('select');
+        $email = $request->query->get('email');
+        $password = $request->query->get('pdw');
 
-        if ($select) {
-            // return the dish of userRepository find by th select option
-            return $this->json($userRepository->findBy([
-                'email' => $select
-            ]), 200, []);
-        } else {
-            
-            // return all the dish of userRepository
-            return $this->json($userRepository->findAll(), 200, []);
+        $userToConect = $userRepository->findOneBy([
+            'email' => $email
+        ]);
+
+        if ($userToConect == []) {
+            $response = 'Utilisateur non trouver';
+        } else if ($userToConect != []) {
+            if ($userToConect->getPassword() === $password) {
+                $response = $userToConect;
+            } else {
+                $response = 'le mot de passe est incorrect';
+            }
         }
+        
+        return $this->json($response, 200, [], ['groups' => 'user'] );
     }
 
-    #[Route('/user', name: 'user_new', methods:["POST"])]
+    #[Route('/user', name: 'user_new', methods: ["POST"])]
     public function userPost(Request $request, SerializerInterface $serializer, EntityManagerInterface $em)
     {
         // add the data
@@ -43,7 +49,7 @@ class UserController extends AbstractController
         return $this->json($newUser, 201, []);
     }
 
-    #[Route('/user', name: 'user_update', methods:["PUT"])]
+    #[Route('/user', name: 'user_update', methods: ["PUT"])]
     public function userPut(Request $request, SerializerInterface $serializer, UserRepository $userRepository, EntityManagerInterface $em)
     {
         // add the new data
@@ -52,14 +58,14 @@ class UserController extends AbstractController
         $email = $updateUser->getEmail();
         // find the user to update
         $user = $userRepository->findOneby([
-            'email'=> $email,
+            'email' => $email,
         ]);
         // update
         $user
-        ->setName($updateUser->getName())
-        ->setEmail($updateUser->getEmail())
-        ->setPassword($updateUser->getPassword());
-        
+            ->setName($updateUser->getName())
+            ->setEmail($updateUser->getEmail())
+            ->setPassword($updateUser->getPassword());
+
         // update send in DB
         $em->persist($user);
         $em->flush();

@@ -4,29 +4,35 @@ import { IoCloseOutline } from 'react-icons/io5'
 import NewUser from "../libs/user/NewUser";
 import IsValidPassword from "../utils/IsValidPassword";
 import CompareUserEmail from "../libs/user/CompareUserEmail";
+import Loading from "./Loading";
 
 export default function SignUpModal() {
 
   const { modalState, toggleModals } = useContext(UserContext);
   const [validation, setValidation] = useState("");
+  const [loading, setLoading] = useState(false);
   const formRef = useRef();
 
   // Test input value, send form and reset input value, or show error message
   async function isValidForm(e) {
     e.preventDefault()
+    setLoading(true)
     const form = document.user
 
-    IsValidPassword(form.password.value, form.pwd.value, setValidation)
+    const isValidPassowrd = await IsValidPassword(form.password.value, form.pwd.value, setValidation)
 
     const isUniqueEmail = await CompareUserEmail(document.user.email.value)
 
-    if (isUniqueEmail) {
+    if (isUniqueEmail && isValidPassowrd) {
       setValidation('')
       NewUser(form)
-    } else {
+      alert (`Merci ${document.user.name.value}, Votre compte a bien été créé, vous pouvez vous connecter.`)
+      toggleModals("signIn")
+    } else if (!isUniqueEmail) {
       setValidation('E-mail deja utiliser')
-      return
     }
+    
+    setLoading(false)
   }
 
   const closeModal = () => {
@@ -103,7 +109,7 @@ export default function SignUpModal() {
                   <button onClick={() => toggleModals("signIn")}>Déjà un Compte?</button>
                 </div>
 
-                <button className="btn-signin">Crée mon Compte</button>
+                {loading ? <Loading /> : <button className="btn-signin">Crée mon Compte</button>}
               </form>
             </div>
 
