@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from "../context/UserContext"
 import logo from '../assets/img/logo-quai-antique.png'
 
@@ -6,11 +6,22 @@ export default function NavBar() {
 
     const { toggleModals, currentUser, disconnect } = useContext(UserContext)
     const [menu, setMenu] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
     
     // Set the Btn LogIn/LogOut
     function log() {
         currentUser === null ? toggleModals("signIn") : disconnect()
     }
+
+    useEffect(() => {
+        if (currentUser) {
+            if (currentUser[3].includes('ROLE_ADMIN') && !isAdmin) {
+                setIsAdmin(true)
+            }
+        } else {
+            setIsAdmin(false)
+        }
+    }, [currentUser])
     
     return (
         <div className='navbar'>
@@ -20,7 +31,7 @@ export default function NavBar() {
                 <div className={menu ? 'navbar-menu show' : 'navbar-menu'}>
                     <ul>
                         <li><a href="/"><h3>Accueil</h3></a></li>
-                        <li><a href="/admin"><h3>Admin</h3></a></li>
+                        {isAdmin && <li><a href="/admin"><h3>Admin</h3></a></li>}
                         <li>
                             <button
                                 id='log'

@@ -8,7 +8,7 @@ export default function PrivateRoute({ children }) {
 
   console.log(currentUser[3]);
 
-  if (!currentUser[3].includes('ROLE_ADMIN')) {
+  if (!currentUser[3].includes('ROLE_ADMIN') || !currentUser) {
     return <Navigate  to="/"/>
   } 
 
