@@ -7,7 +7,7 @@ import CompareUserEmail from "../libs/user/CompareUserEmail";
 
 export default function SignUpModal() {
 
-  const { modalState, toggleModals} = useContext(UserContext);
+  const { modalState, toggleModals } = useContext(UserContext);
   const [validation, setValidation] = useState("");
   const formRef = useRef();
 
@@ -17,9 +17,9 @@ export default function SignUpModal() {
     const form = document.user
 
     IsValidPassword(form.password.value, form.pwd.value, setValidation)
-    
+
     const isUniqueEmail = await CompareUserEmail(document.user.email.value)
-    
+
     if (isUniqueEmail) {
       setValidation('')
       NewUser(form)
@@ -43,37 +43,40 @@ export default function SignUpModal() {
           <div className="modal-box">
 
             <div className="modal-header">
-              <h5 className="modal-title">Sign Up</h5>
-              <button onClick={closeModal} className="btn-close-modal">
-                <IoCloseOutline size="2.8em" />
-              </button>
+              <h4 className="modal-title">Création de Compte</h4>
             </div>
 
             <div className="modal-body">
+              <button onClick={closeModal} className="btn-close-modal">
+                <IoCloseOutline size="2.8em" />
+              </button>
               <form ref={formRef} onSubmit={isValidForm} className="sign-up-form" name="user">
                 <div className="input">
+                <label htmlFor="signUpPwd">Nom</label>
                   <input
                     name="name"
                     required
                     type="text"
                     className="form-control"
                     id="signUpName"
-                    placeholder="Nom"
+                    placeholder="Jhon"
                   />
                 </div>
 
                 <div className="input">
+                <label htmlFor="signUpPwd">E-mail</label>
                   <input
                     name="email"
                     required
                     type="email"
                     className="form-control"
                     id="signUpEmail"
-                    placeholder="Email adress"
+                    placeholder="example@mail.fr"
                   />
                 </div>
 
                 <div className="input">
+                <label htmlFor="signUpPwd">Mot de passe</label>
                   <input
                     name="password"
                     required
@@ -82,9 +85,7 @@ export default function SignUpModal() {
                     id="signUpPwd"
                     placeholder="Password"
                   />
-                </div>
-
-                <div className="input">
+                <label htmlFor="signUpPwd">Comfirmation de Mot de passe</label>
                   <input
                     name="pwd"
                     required
@@ -93,18 +94,19 @@ export default function SignUpModal() {
                     id="repeatPwd"
                     placeholder="Repeat Password"
                   />
-                  <p className="text-danger mt-1">{validation}</p>
                 </div>
 
-                <button className="btn-signin">Sign Up</button>
+                <p className="text-danger mt-1">{validation}</p>
+
+                {/* switch to signIn modal */}
+                <div className="modal-switch">
+                  <button onClick={() => toggleModals("signIn")}>Déjà un Compte?</button>
+                </div>
+
+                <button className="btn-signin">Crée mon Compte</button>
               </form>
             </div>
 
-            {/* switch to signIn modal */}
-            <div className="modal-footer">
-              <p>Already an account</p>
-              <button onClick={() => toggleModals("signIn")}>Sign In</button>
-            </div>
 
           </div>
         </div>

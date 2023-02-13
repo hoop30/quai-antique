@@ -19,6 +19,7 @@ export default function NavBar() {
                 <div className={menu ? 'navbar-menu show' : 'navbar-menu'}>
                     <ul>
                         <li><a href="/"><h3>Accueil</h3></a></li>
+                        <li><a href="/admin"><h3>Admin</h3></a></li>
                         <li>
                             <button
                                 id='log'
