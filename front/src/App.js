@@ -9,6 +9,7 @@ import PrivateRoute from './pages/private/PrivateRoute ';
 import Admin from './pages/private/modification/Admin';
 
 function App() {
+
   return (
     <div className='App'>
       <SignInModal />

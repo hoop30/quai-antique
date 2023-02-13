@@ -17,20 +17,30 @@ class UserController extends AbstractController
     {
         $email = $request->query->get('email');
         $password = $request->query->get('pdw');
+        $id = $request->query->get('id');
 
-        $userToConect = $userRepository->findOneBy([
-            'email' => $email
-        ]);
+        
+        if ($id) {
+            $response = $userRepository->findOneBy([
+                'id' => $id
+            ]);
 
-        if ($userToConect == []) {
-            $response = 'Utilisateur non trouver';
-        } else if ($userToConect != []) {
-            if ($userToConect->getPassword() === $password) {
-                $response = $userToConect;
-            } else {
-                $response = 'le mot de passe est incorrect';
+        } else {
+            $userToConect = $userRepository->findOneBy([
+                'email' => $email
+            ]);
+
+            if ($userToConect == []) {
+                $response = 'Utilisateur non trouver';
+            } else if ($userToConect != []) {
+                if ($userToConect->getPassword() === $password) {
+                    $response = $userToConect;
+                } else {
+                    $response = 'le mot de passe est incorrect';
+                }
             }
         }
+        
         
         return $this->json($response, 200, [], ['groups' => 'user'] );
     }

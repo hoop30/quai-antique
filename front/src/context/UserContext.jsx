@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import GetUserById from "../libs/user/GetUserById";
 
 export const UserContext = createContext()
 
@@ -6,17 +7,34 @@ export function UserContextProvider(props) {
 
   // Store user state (connected or not), and loading to wait the user state
   const [currentUser, setCurrentUser] = useState(null);
-  const [loadingData, setLoadingData] = useState(false);
+  const [loadingData, setLoadingData] = useState(true);
+
+  useEffect(() => {
+    console.log('local user id : ',localStorage.getItem('userId'));
+    if (localStorage.getItem('userId')) {
+      stayConnect(localStorage.getItem('userId'))
+    } else {
+      setLoadingData(false)
+    }
+  }, [])
+  
   
   // connect user
   function connection(user) {
     console.log(user);
     setCurrentUser([user.name, user.email, user.Reservation, user.roles])
+    localStorage.setItem('userId', user.id);
+    setLoadingData(false)
+  }
+  // stay connect
+  async function stayConnect(id) {
+    connection(await GetUserById(localStorage.getItem('userId')))
   }
 
   //disconnect user
   function disconnect() {
     setCurrentUser(null)
+    localStorage.removeItem('userId');
   }
   // Modal show state
   const [modalState, setModalState] = useState({

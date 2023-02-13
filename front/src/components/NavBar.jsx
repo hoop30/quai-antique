@@ -12,7 +12,6 @@ export default function NavBar() {
         currentUser === null ? toggleModals("signIn") : disconnect()
     }
     
-    console.log(currentUser);
     return (
         <div className='navbar'>
             <img className="logo-qa" src={logo} alt="Quai Antique" width='100' height='30' />
