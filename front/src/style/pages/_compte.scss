@@ -1,0 +1,30 @@
+.compte {
+    display: flex;
+    justify-content: center;
+    padding: 100px 0;
+    min-height: 450px;
+
+    table {
+        width: 90%;
+    }
+    caption {
+        font-size: 25px;
+        font-weight: 600;
+    }
+
+    .change {
+        align-items: center;
+        
+        
+    }
+    .suprim {
+        color: var(--danger);
+    }
+    button {
+        background: var(--black);
+        color: var(--white);
+        font-weight: 700;
+        padding: 2px 10px;
+
+    }
+}
