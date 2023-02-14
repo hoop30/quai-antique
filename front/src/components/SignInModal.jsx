@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { IoCloseOutline } from 'react-icons/io5'
 import UserMatch from "../utils/UserMatch";
@@ -9,9 +9,6 @@ export default function SignInModal() {
     const { modalState, toggleModals, connection } = useContext(UserContext)
     const [validation, setValidation] = useState("")
     const [loading, setLoading] = useState(false);
-    const inputs = useRef([])
-    inputs.current = []
-    const formRef = useRef()
 
     // Send form and reset input value, or show error message
     async function handleForm(e) {
@@ -49,7 +46,7 @@ export default function SignInModal() {
                             <button onClick={closeModal} className="btn-close-modal">
                                 <IoCloseOutline size="2.5em" />
                             </button>
-                            <form ref={formRef} onSubmit={handleForm} className="sign-up-form" name='signIn'>
+                            <form onSubmit={handleForm} className="sign-up-form" name='signIn'>
                                 <div className="input">
                                     <label htmlFor="signUpEmail">Email</label>
                                     <input

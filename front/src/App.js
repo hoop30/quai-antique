@@ -7,6 +7,7 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer';
 import PrivateRoute from './pages/private/PrivateRoute ';
 import Admin from './pages/private/modification/Admin';
+import ReservationModal from './components/ReservationModal';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
     <div className='App'>
       <SignInModal />
       <SignUpModal />
+      <ReservationModal />
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />

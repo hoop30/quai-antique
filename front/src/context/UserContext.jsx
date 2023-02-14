@@ -10,7 +10,6 @@ export function UserContextProvider(props) {
   const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
-    console.log('local user id : ',localStorage.getItem('userId'));
     if (localStorage.getItem('userId')) {
       stayConnect(localStorage.getItem('userId'))
     } else {
@@ -25,7 +24,7 @@ export function UserContextProvider(props) {
     setLoadingData(false)
   }
   // stay connect
-  async function stayConnect(id) {
+  async function stayConnect() {
     connection(await GetUserById(localStorage.getItem('userId')))
   }
 
