@@ -10,13 +10,17 @@ export function UserContextProvider(props) {
   const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
+    update()
+  }, [])
+  
+  function update() {
     if (localStorage.getItem('userId')) {
       stayConnect(localStorage.getItem('userId'))
     } else {
       setLoadingData(false)
     }
-  }, [])
-  
+  }
+
   // connect user
   function connection(user) {
     setCurrentUser([user.name, user.email, user.info, user.Reservation, user.roles])
@@ -63,7 +67,7 @@ export function UserContextProvider(props) {
   }
 
   return (
-    <UserContext.Provider value={{modalState, toggleModals, currentUser, connection, disconnect}}>
+    <UserContext.Provider value={{modalState, toggleModals, currentUser, connection, disconnect, update}}>
       {!loadingData && props.children}
     </UserContext.Provider>
   )

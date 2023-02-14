@@ -20,14 +20,23 @@ body {
 body {
     overflow-x: hidden;
 }
+#root {
+    overflow-x: hidden;
+    /* Unnecessary IMHO, uncomment next line to force hidden behavior */
+    /* overflow-x: hidden !important; */
+    /* Additional tunning proposed by the community */
+    position: relative;
+    width: 100%;
+}
 
-a, button {
+a,
+button {
     color: var(--white);
 }
 
 a {
     transition: color 0.3s;
-    
+
     &:hover {
         color: var(--link);
     }

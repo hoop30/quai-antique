@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class UserController extends AbstractController
@@ -65,17 +66,31 @@ class UserController extends AbstractController
         // add the new data
         $data = $request->getContent();
         $updateUser = $serializer->deserialize($data, User::class, 'json');
-        $email = $updateUser->getEmail();
-        // find the user to update
+
+        // find user to update
+        $email = json_decode($data)->currentmail;
         $user = $userRepository->findOneby([
             'email' => $email,
         ]);
+
+        //dd($updateUser->getEmail() , $email);
+        // test if mail is unique
+        if ($updateUser->getEmail() !== $email) {
+
+            $test = $userRepository->findOneby([
+                'email' => $updateUser->getEmail(),
+            ]);
+            if ($test) {
+                return $this->json('ce mail existe deja', 201, []);
+            }
+        }
+
         // update
         $user
-            ->setName($updateUser->getName())
-            ->setEmail($updateUser->getEmail())
-            ->setPassword($updateUser->getPassword());
-
+        ->setName($updateUser->getName())
+        ->setEmail($updateUser->getEmail())
+        ->setInfo($updateUser->getInfo());
+        
         // update send in DB
         $em->persist($user);
         $em->flush();
