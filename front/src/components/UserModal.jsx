@@ -15,12 +15,14 @@ export default function SignInModal() {
     const [inputValue, setInputValue] = useState({})
 
     useEffect(() => {
-        setInputValue({
-            name : currentUser[0],
-            email: currentUser[1],
-            phone: currentUser[2],
-            info: currentUser[3]
-        })
+        if (currentUser) {
+            setInputValue({
+                name : currentUser.name,
+                email: currentUser.email,
+                phone: currentUser.phone,
+                info: currentUser.info
+            })
+        }
     }, [modalState])
 
     function handleChange(e) {
@@ -37,7 +39,7 @@ export default function SignInModal() {
         e.preventDefault()
         setLoading(true)
 
-        const isUpdate = await UpdateUser(document.update, currentUser[1])
+        const isUpdate = await UpdateUser(document.update, currentUser.mail)
 
         if (isUpdate === true) {
             setValidation("")

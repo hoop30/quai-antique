@@ -20,28 +20,28 @@ export default function Compte() {
                 <tbody>
                     <tr>
                         <th>Nom</th>
-                        <td>{currentUser[0]}</td>
+                        <td>{currentUser.name}</td>
                     </tr>
                     <tr>
                         <th>E-mail</th>
-                        <td>{currentUser[1]}</td>
+                        <td>{currentUser.email}</td>
                     </tr>
                     <tr>
                         <th>Telephone</th>
-                        <td>{currentUser[2]}</td>
+                        <td>{currentUser.phone}</td>
                     </tr>
                     <tr>
                         <th>Info</th>
-                        <td>{currentUser[3]}</td>
+                        <td>{currentUser.info}</td>
                     </tr>
                     <tr>
                         <th>Reservation</th>
-                        <td>{currentUser[4]}</td>
+                        <td>{currentUser.reservation}</td>
                     </tr>
-                    <tr className='change'>
+                    {!currentUser.roles.includes('ROLE_ADMIN') && <tr className='change'>
                         <td align='center'><button onClick={toggleModal}><p>Modifier</p></button></td>
                         <td align='center'><button className='suprim'><p>Suprimer</p></button></td>
-                    </tr>
+                    </tr>}
                 </tbody>
             </table>
         </div>

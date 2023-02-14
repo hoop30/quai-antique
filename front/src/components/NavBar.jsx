@@ -15,7 +15,7 @@ export default function NavBar() {
 
     useEffect(() => {
         if (currentUser) {
-            if (currentUser[3].includes('ROLE_ADMIN') && !isAdmin) {
+            if (currentUser.roles.includes('ROLE_ADMIN') && !isAdmin) {
                 setIsAdmin(true)
             }
         } else {
@@ -26,7 +26,7 @@ export default function NavBar() {
     return (
         <div className='navbar'>
             <img className="logo-qa" src={logo} alt="Quai Antique" width='100' height='30' />
-            {currentUser && <div className="current-user">Bienvenue {currentUser[0]}</div>}
+            {currentUser && <div className="current-user">Bienvenue {currentUser.name}</div>}
             <nav>
                 <div className={menu ? 'navbar-menu show' : 'navbar-menu'}>
                     <ul>
