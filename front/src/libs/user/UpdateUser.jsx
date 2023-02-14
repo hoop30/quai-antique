@@ -4,9 +4,10 @@ export default async function UpdateUser(form, email) {
             currentmail: email,
             name: form.name.value,
             email: form.email.value,
+            phone: form.phone.value,
             info: form.info.value
         }
-
+        console.log(updateUser);
         const updateUserJson = JSON.stringify(updateUser)
 
         const params = {

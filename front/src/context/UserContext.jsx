@@ -23,7 +23,7 @@ export function UserContextProvider(props) {
 
   // connect user
   function connection(user) {
-    setCurrentUser([user.name, user.email, user.info, user.Reservation, user.roles])
+    setCurrentUser([user.name, user.email,user.phone, user.info, user.Reservation, user.roles])
     localStorage.setItem('userId', user.id);
     setLoadingData(false)
   }

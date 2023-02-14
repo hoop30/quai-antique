@@ -27,12 +27,16 @@ export default function Compte() {
                         <td>{currentUser[1]}</td>
                     </tr>
                     <tr>
-                        <th>Info</th>
+                        <th>Telephone</th>
                         <td>{currentUser[2]}</td>
                     </tr>
                     <tr>
-                        <th>Reservation</th>
+                        <th>Info</th>
                         <td>{currentUser[3]}</td>
+                    </tr>
+                    <tr>
+                        <th>Reservation</th>
+                        <td>{currentUser[4]}</td>
                     </tr>
                     <tr className='change'>
                         <td align='center'><button onClick={toggleModal}><p>Modifier</p></button></td>

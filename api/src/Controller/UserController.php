@@ -66,7 +66,6 @@ class UserController extends AbstractController
         // add the new data
         $data = $request->getContent();
         $updateUser = $serializer->deserialize($data, User::class, 'json');
-
         // find user to update
         $email = json_decode($data)->currentmail;
         $user = $userRepository->findOneby([
@@ -84,11 +83,12 @@ class UserController extends AbstractController
                 return $this->json('ce mail existe deja', 201, []);
             }
         }
-
+        
         // update
         $user
         ->setName($updateUser->getName())
         ->setEmail($updateUser->getEmail())
+        ->setPhone($updateUser->getPhone())
         ->setInfo($updateUser->getInfo());
         
         // update send in DB

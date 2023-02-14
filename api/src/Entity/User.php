@@ -26,7 +26,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     #[Groups('user')]
-
     private array $roles = [];
 
     /**
@@ -46,6 +45,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups('user')]
     private ?string $info = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    #[Groups('user')]
+    private ?string $phone = null;
 
     public function __construct()
     {
@@ -172,6 +175,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setInfo(?string $info): self
     {
         $this->info = $info;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }

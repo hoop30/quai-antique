@@ -4,7 +4,6 @@ import { UserContext } from "../context/UserContext";
 import { IoCloseOutline } from 'react-icons/io5'
 import Loading from "./Loading";
 import UpdateUser from "../libs/user/UpdateUser";
-import { Navigate } from "react-router-dom";
 
 export default function SignInModal() {
 
@@ -19,7 +18,8 @@ export default function SignInModal() {
         setInputValue({
             name : currentUser[0],
             email: currentUser[1],
-            info: currentUser[2]
+            phone: currentUser[2],
+            info: currentUser[3]
         })
     }, [modalState])
 
@@ -101,6 +101,20 @@ export default function SignInModal() {
                                         value={inputValue.email}
                                     />
                                 </div>
+
+                                <div className="input">
+                                    <label>Telephone</label>
+                                    <input
+                                        onChange={handleChange}
+                                        name="phone"
+                                        type="tel"
+                                        className="form-control"
+                                        value={inputValue.phone}
+                                        maxLength='10'
+                                        minLength='10'
+                                    />
+                                </div>
+
 
                                 <div className="input">
                                     <label>Info</label>
