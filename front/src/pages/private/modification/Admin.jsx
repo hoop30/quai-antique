@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import AddDishModal from '../../../components/AddDishModal'
+import AddHourModal from '../../../components/AddHourModal'
+import AddMenuModal from '../../../components/AddMenuModal'
 import GetDays from '../../../libs/days/GetDays'
 import GetDish from '../../../libs/dish/GetDish'
 import GetMenu from '../../../libs/menu/GetMenu'
@@ -13,6 +16,7 @@ export default function Admin() {
 	const [menus, setMenu] = useState()
 	const [days, setDays] = useState()
 	const [openHours, setOpenHours] = useState()
+	const [addModal, setAddModal] = useState(null)
 
 	useEffect(() => {
 		getResourses()
@@ -25,7 +29,9 @@ export default function Admin() {
 		setOpenHours(await GetOpenHours())
 	}
 
-	//console.log(dishs, menus, openHours, days);
+	function onSetAddModal(type) {
+		setAddModal(type)
+	}
 
 	return (
 		<div className='admin'>
@@ -42,6 +48,9 @@ export default function Admin() {
 								<td>{FormatPrice(dish.price)}</td>
 							</tr>
 						)}
+						<tr>
+							<td><button onClick={() => onSetAddModal('dish')}>Ajouter</button></td>
+						</tr>
 					</tbody>
 				</table>
 			</section>
@@ -56,6 +65,9 @@ export default function Admin() {
 								<td>{menu.type}</td>
 							</tr>
 						)}
+						<tr>
+							<td><button onClick={() => onSetAddModal('menu')}>Ajouter</button></td>
+						</tr>
 					</tbody>
 				</table>
 			</section>
@@ -63,10 +75,10 @@ export default function Admin() {
 				<h3>Horraires</h3>
 				<div className="horraires-content">
 					<div className='days-legend'>
-							<div className='col'><span className='red'></span>Ouvert toutes la journée</div>
-							<div className='col'><span className='green'></span>Midi uniquement</div>
-							<div className='col'><span className='blue'></span>Soir uniquement</div>
-							<div className='col'><span className='grey'></span>Fermer</div>
+						<div className='col'><span className='red'></span>Ouvert toutes la journée</div>
+						<div className='col'><span className='green'></span>Midi uniquement</div>
+						<div className='col'><span className='blue'></span>Soir uniquement</div>
+						<div className='col'><span className='grey'></span>Fermer</div>
 					</div>
 					<ul className='days-display'>
 						{days && days.map(day =>
@@ -83,10 +95,16 @@ export default function Admin() {
 									<td>{TimeFormat(hour.close)}</td>
 								</tr>
 							)}
+							<tr>
+								<td><button onClick={() => onSetAddModal('hour')}>Ajouter</button></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
 			</section>
+			{addModal === 'dish' ? <AddDishModal setAddModal={onSetAddModal}/> : null}
+			{addModal === 'menu' ? <AddMenuModal setAddModal={onSetAddModal}/> : null}
+			{addModal === 'hour' ? <AddHourModal setAddModal={onSetAddModal}/> : null}
 		</div>
 	)
 }
