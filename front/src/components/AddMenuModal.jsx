@@ -69,7 +69,7 @@ export default function AddMenuModal({ setAddModal }) {
                                 <label>Plats</label>
                                 {dishs ? <select name="Dish" required multiple>
                                     {dishs.map(dish =>
-                                        <option key={dish.id} value={dish.id}>{dish.name}</option>
+                                        <option key={dish.id} value={dish.id}>{dish.type} | {dish.name}</option>
                                     )}
                                 </select> : <Loading />}
                             </div>

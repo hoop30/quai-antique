@@ -10,21 +10,23 @@
 
         td {
             padding: 0 10px;
-
-            button {
-                background: var(--grey);
-                color: var(--black);
-                font-family: 'Mukta Vaani', sans-serif;
-                padding: 0 5px;
-                cursor: pointer;
-
-                &:hover {
-                    opacity: 0.8;
-                }
-            }
         }
+
         tr:nth-child(odd) {
             background-color: lightgray;
+        }
+    }
+    
+    button {
+        background: var(--grey);
+        color: var(--black);
+        font-family: 'Mukta Vaani', sans-serif;
+        padding: 0 5px;
+        cursor: pointer;
+        width: fit-content;
+
+        &:hover {
+            opacity: 0.8;
         }
     }
 

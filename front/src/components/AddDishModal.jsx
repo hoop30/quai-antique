@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { IoCloseOutline } from 'react-icons/io5'
+import NewDish from "../libs/dish/NewDish";
 import Loading from "./Loading";
 
-export default function AddDishModal({ setAddModal }) {
+export default function AddDishModal({ setAddModal, update }) {
 
     const [validation, setValidation] = useState("")
     const [loading, setLoading] = useState(false);
@@ -11,8 +12,22 @@ export default function AddDishModal({ setAddModal }) {
     async function handleForm(e) {
         e.preventDefault()
         setLoading(true)
+        const form = document.newdish
 
+        const isValid = await NewDish(form)
 
+        if (isValid === true) {
+            setValidation("")
+            closeModal()
+            setLoading(false)
+            update()
+            return
+        } else if (typeof isValid === 'string') {
+            setValidation(isValid)
+            setLoading(false)
+            return
+        }
+        
         setValidation("Oops, une erreur c'est produite!")
         setLoading(false)
     };
@@ -38,7 +53,7 @@ export default function AddDishModal({ setAddModal }) {
                             <IoCloseOutline size="2.5em" />
                         </button>
 
-                        <form onSubmit={handleForm} className="sign-up-form" name='update'>
+                        <form onSubmit={handleForm} className="sign-up-form" name='newdish'>
                             <div className="input">
                                 <label>Type</label>
                                 <select name="type">

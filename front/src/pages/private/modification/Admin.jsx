@@ -48,11 +48,9 @@ export default function Admin() {
 								<td>{FormatPrice(dish.price)}</td>
 							</tr>
 						)}
-						<tr>
-							<td><button onClick={() => onSetAddModal('dish')}>Ajouter</button></td>
-						</tr>
 					</tbody>
 				</table>
+				<button onClick={() => onSetAddModal('dish')}>Ajouter</button>
 			</section>
 			<section>
 				<h3>Menus</h3>
@@ -65,11 +63,9 @@ export default function Admin() {
 								<td>{menu.type}</td>
 							</tr>
 						)}
-						<tr>
-							<td><button onClick={() => onSetAddModal('menu')}>Ajouter</button></td>
-						</tr>
 					</tbody>
 				</table>
+				<button onClick={() => onSetAddModal('menu')}>Ajouter</button>
 			</section>
 			<section>
 				<h3>Horraires</h3>
@@ -95,16 +91,14 @@ export default function Admin() {
 									<td>{TimeFormat(hour.close)}</td>
 								</tr>
 							)}
-							<tr>
-								<td><button onClick={() => onSetAddModal('hour')}>Ajouter</button></td>
-							</tr>
 						</tbody>
 					</table>
+					<button onClick={() => onSetAddModal('hour')}>Ajouter</button>
 				</div>
 			</section>
-			{addModal === 'dish' ? <AddDishModal setAddModal={onSetAddModal}/> : null}
-			{addModal === 'menu' ? <AddMenuModal setAddModal={onSetAddModal}/> : null}
-			{addModal === 'hour' ? <AddHourModal setAddModal={onSetAddModal}/> : null}
+			{addModal === 'dish' ? <AddDishModal setAddModal={onSetAddModal} update={getResourses} /> : null}
+			{addModal === 'menu' ? <AddMenuModal setAddModal={onSetAddModal} update={getResourses} /> : null}
+			{addModal === 'hour' ? <AddHourModal setAddModal={onSetAddModal} update={getResourses} /> : null}
 		</div>
 	)
 }
