@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoCloseOutline } from 'react-icons/io5'
+import GetDish from "../libs/dish/GetDish";
 import Loading from "./Loading";
 
 export default function AddMenuModal({ setAddModal }) {
 
     const [validation, setValidation] = useState("")
     const [loading, setLoading] = useState(false);
+    const [dishs, setDishs] = useState(false);
+
+    useEffect(() => {
+        loadDishs()
+    }, [])
+    
+    async function loadDishs() {
+        setDishs(await GetDish())
+    }
 
     // Send form and reset input value, or show error message
     async function handleForm(e) {
@@ -16,6 +26,12 @@ export default function AddMenuModal({ setAddModal }) {
         setValidation("Oops, une erreur c'est produite!")
         setLoading(false)
     };
+
+    function dishsSelect(e) {
+        console.log(e.target.value);
+
+    }
+
 
     const closeModal = () => {
         setValidation("")
@@ -51,10 +67,11 @@ export default function AddMenuModal({ setAddModal }) {
 
                             <div className="input">
                                 <label>Plats</label>
-                                <select name="Dish" required multiple>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                </select>
+                                {dishs ? <select name="Dish" required multiple>
+                                    {dishs.map(dish =>
+                                        <option key={dish.id} value={dish.id}>{dish.name}</option>
+                                    )}
+                                </select> : <Loading />}
                             </div>
 
                             <div className="input">
@@ -69,10 +86,10 @@ export default function AddMenuModal({ setAddModal }) {
 
                             <div className="input">
                                 <label>Type</label>
-                                <select name="Dish" required>
+                                <select name="Dish" required onChange={dishsSelect}>
                                     <option value="Entrée / Plat">Entrée / Plat</option>
                                     <option value="Plat / Dessert">Plat / Dessert</option>
-                                    <option value="Entrée / Plat / Dessert">Entrée / Plat / Dessert</option>
+                                    <option value="Entrée / Plat / Dessert" selected>Entrée / Plat / Dessert</option>
                                 </select>
                             </div>
 
