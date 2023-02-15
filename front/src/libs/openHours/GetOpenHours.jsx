@@ -1,4 +1,4 @@
-export default function GetOpenHours() {
+export default async function GetOpenHours() {
 
     return fetch('http://localhost:5000/openhours')
         .then(response => { return response.json() })

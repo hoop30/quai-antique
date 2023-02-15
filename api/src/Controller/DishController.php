@@ -27,7 +27,7 @@ class DishController extends AbstractController
         } else {
             
             // return all the dish of userRepository
-            return $this->json($dishRepository->findAll(), 200, [], ['groups' => 'dish']);
+            return $this->json($dishRepository->findAll(), 200, [], ['groups' => 'dishs']);
         }
     }
 

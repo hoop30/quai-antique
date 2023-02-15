@@ -17,7 +17,7 @@ class MenuController extends AbstractController
     public function userGet(MenuRepository $menuRepository)
     {
         // return all the user of userRepository
-        return $this->json($menuRepository->findAll(), 200, [], ['groups' => 'menu']);
+        return $this->json($menuRepository->findAll(), 200, [], ['groups' => 'menus']);
     }
 
     #[Route('/menu', name: 'menu_new', methods:["POST"])]
