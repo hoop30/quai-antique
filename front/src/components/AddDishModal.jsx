@@ -40,13 +40,31 @@ export default function AddDishModal({ setAddModal }) {
 
                         <form onSubmit={handleForm} className="sign-up-form" name='update'>
                             <div className="input">
-                                <label>dish</label>
-                                <input
+                                <label>Type</label>
+                                <select name="type">
+                                    <option value="Entrée">Entrée</option>
+                                    <option value="Plat">Plat</option>
+                                    <option value="Dessert">Dessert</option>
+                                </select>
+                            </div>
+
+                            <div className="input">
+                                <label>Nom</label>
+                                <input 
+                                    type="text"
                                     name="name"
                                     required
-                                    type="text"
                                     className="form-control"
-                                    id='0'
+                                />
+                            </div>
+
+                            <div className="input">
+                                <label>Prix</label>
+                                <input 
+                                    type="number"
+                                    name="price"
+                                    required
+                                    className="form-control"
                                 />
                             </div>
 

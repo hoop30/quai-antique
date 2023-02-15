@@ -70,7 +70,7 @@
             background: var(--black);
             color: var(--white);
 
-            input, textarea {
+            input, textarea, select {
                 background: var(--white);
                 width: 100%;
                 padding: 5px;
@@ -103,6 +103,7 @@
             transition: 0.2s ease-out;
             width: fit-content;
             align-self: center;
+            margin-bottom: 10px;
 
             &:hover {
                 background: transparent;

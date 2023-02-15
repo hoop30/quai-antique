@@ -40,13 +40,52 @@ export default function AddHourModal({ setAddModal }) {
 
                         <form onSubmit={handleForm} className="sign-up-form" name='update'>
                             <div className="input">
-                                <label>dish</label>
+                                <label>Jour</label>
+                                <select name="Dish" required>
+                                    <option value="Lundi">Lundi</option>
+                                    <option value="Mardi">Mardi</option>
+                                    <option value="Mercredi">Mercredi</option>
+                                    <option value="Jeudi">Jeudi</option>
+                                    <option value="Vendredi">Vendredi</option>
+                                    <option value="Samedi">Samedi</option>
+                                    <option value="Dimanche">Dimanche</option>
+                                </select>
+                                <label>Ouverture ?</label>
+                                <select name="Dish" required>
+                                    <option value="open">Toute la journée</option>
+                                    <option value="noon">Midi uniquement</option>
+                                    <option value="evening">Soir uniquement</option>
+                                    <option value="close">Fermer</option>
+                                </select>
+                            </div>
+                            
+                            <p className="text-danger mt-1">{validation}</p>
+
+                            {loading ? <Loading /> : <button className="btn-signin">Envoyer</button>}
+
+                        </form>
+
+                        <form onSubmit={handleForm} className="sign-up-form" name='update'>
+
+                            <div className="input">
+                                <label>Horraire</label>
+                                <select name="Dish" required>
+                                    <option value="noon">Midi</option>
+                                    <option value="evening">Soir</option>
+                                </select>
+                                <label>overture</label>
                                 <input
-                                    name="name"
+                                    name="open"
                                     required
-                                    type="text"
+                                    type="time"
                                     className="form-control"
-                                    id='0'
+                                />
+                                <label>fermeture</label>
+                                <input
+                                    name="close"
+                                    required
+                                    type="time"
+                                    className="form-control"
                                 />
                             </div>
 

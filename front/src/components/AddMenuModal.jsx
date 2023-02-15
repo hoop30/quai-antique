@@ -40,14 +40,40 @@ export default function AddMenuModal({ setAddModal }) {
 
                         <form onSubmit={handleForm} className="sign-up-form" name='update'>
                             <div className="input">
-                                <label>dish</label>
+                                <label>Nom</label>
                                 <input
                                     name="name"
                                     required
                                     type="text"
                                     className="form-control"
-                                    id='0'
                                 />
+                            </div>
+
+                            <div className="input">
+                                <label>Plats</label>
+                                <select name="Dish" required multiple>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                </select>
+                            </div>
+
+                            <div className="input">
+                                <label>Prix</label>
+                                <input
+                                    name="price"
+                                    required
+                                    type="number"
+                                    className="form-control"
+                                />
+                            </div>
+
+                            <div className="input">
+                                <label>Type</label>
+                                <select name="Dish" required>
+                                    <option value="Entrée / Plat">Entrée / Plat</option>
+                                    <option value="Plat / Dessert">Plat / Dessert</option>
+                                    <option value="Entrée / Plat / Dessert">Entrée / Plat / Dessert</option>
+                                </select>
                             </div>
 
                             <p className="text-danger mt-1">{validation}</p>
