@@ -11,16 +11,16 @@ export default function ReservationModal() {
     const { currentUser } = useContext(UserContext)
     const { ReservationModal, toggleModals } = useContext(ReservationModalContext)
     const [validation, setValidation] = useState("")
-    const [reservation, setReservation] = useState({})
-    const [formIsComplete, setFormIsComplete] = useState(false)
     const [loading, setLoading] = useState(false);
 
     // Send form and reset input value, or show error message
-    function firstForm(e) {
+    async function firstForm(e) {
         e.preventDefault()
         setLoading(true)
+
         let hour
         const hours = document.querySelectorAll('.hour')
+        const form = document.reservation
 
         hours.forEach(el => {
             if (el.classList.contains('selected')) {
@@ -28,46 +28,23 @@ export default function ReservationModal() {
             }
         });
 
-        setReservation({
-            number: document.reservation.number.value,
-            date: document.reservation.date.value,
-            time: hour,
-            info: document.reservation.info.value
-        })
-        setLoading(false)
-        toggleModals('secondModal')
-    };
+        const isReserved = await NewReservation(form, hour)
 
-    function secondForm(e) {
-        e.preventDefault()
-        setLoading(true)
-        
-        setReservation({
-            ...reservation,
-            name: document.reservation.name.value,
-            email: document.reservation.email.value,
-            phone: document.reservation.phone.value
-        })
-        
-        setFormIsComplete(!formIsComplete)
-    };
-
-    if (formIsComplete) {
-        sendReservation()
-    }
-
-    async function sendReservation() {
-        const isReserved = await NewReservation(reservation)
-
-        if (isReserved) {
+        if (isReserved && hour) {
             alert('Merci pour votre reservation')
             toggleModals('close')
+        } else if (!hour) {
+            setValidation('veuillez selecionner une horraire')
+            setLoading(false)
+            return
         } else {
             alert("Oops une erreur s'est produite")
         }
 
+        setValidation('')
         setLoading(false)
-    }
+        toggleModals('close')
+    };
 
     const closeModal = () => {
         setValidation("")
@@ -146,16 +123,11 @@ export default function ReservationModal() {
                                     <textarea
                                         name="info"
                                         cols="30"
-                                        rows="5">
-
+                                        rows="5"
+                                    >
                                     </textarea>
                                 </div>
 
-                                <p className="text-danger mt-1">{validation}</p>
-
-                                {loading ? <Loading /> : <button className="btn-signin">Suivant</button>}
-                            </form>}
-                            {ReservationModal.secondModal && <form onSubmit={secondForm} className="sign-up-form" name='reservation'>
                                 <div className="input">
                                     <label htmlFor="signUpEmail">Nom</label>
                                     <input
@@ -169,6 +141,7 @@ export default function ReservationModal() {
                                     <label htmlFor="signUpEmail">E-mail</label>
                                     <input
                                         name="email"
+                                        required
                                         type="email"
                                         className="form-control"
                                     />
@@ -185,7 +158,7 @@ export default function ReservationModal() {
 
                                 <p className="text-danger mt-1">{validation}</p>
 
-                                {loading ? <Loading /> : <button className="btn-signin">Reserver</button>}
+                                {loading ? <Loading /> : <button className="btn-signin">Suivant</button>}
                             </form>}
                         </div>
                     </div>

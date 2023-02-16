@@ -25,7 +25,7 @@ class ReservationController extends AbstractController
     {
         // add the data
         $data = $request->getContent();
-        dd($data);
+        //dd($data);
         // create a new user with the data
         $newReservation = $serializer->deserialize($data, Reservation::class, 'json');
         // send new user to the DB
