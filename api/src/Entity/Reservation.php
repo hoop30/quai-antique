@@ -29,6 +29,12 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'Reservation')]
     private ?User $User = null;
 
+    #[ORM\Column]
+    private ?int $number = null;
+
+    #[ORM\Column(length: 10)]
+    private ?string $phone = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +96,30 @@ class Reservation
     public function setUser(?User $User): self
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getNumber(): ?int
+    {
+        return $this->number;
+    }
+
+    public function setNumber(int $number): self
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }

@@ -11,15 +11,8 @@ export default function ReservationModal() {
     const { currentUser } = useContext(UserContext)
     const { ReservationModal, toggleModals } = useContext(ReservationModalContext)
     const [validation, setValidation] = useState("")
-    const [reservation, setReservation] = useState({
-        number: null,
-        date: null,
-        hour: null,
-        info: null,
-        name: null,
-        email: null,
-        phone: null
-    })
+    const [reservation, setReservation] = useState({})
+    const [formIsComplete, setFormIsComplete] = useState(false)
     const [loading, setLoading] = useState(false);
 
     // Send form and reset input value, or show error message
@@ -36,13 +29,11 @@ export default function ReservationModal() {
         });
 
         setReservation({
-            ...reservation,
             number: document.reservation.number.value,
             date: document.reservation.date.value,
-            hour: hour,
+            time: hour,
             info: document.reservation.info.value
         })
-
         setLoading(false)
         toggleModals('secondModal')
     };
@@ -58,9 +49,26 @@ export default function ReservationModal() {
             phone: document.reservation.phone.value
         })
         
+        setFormIsComplete(!formIsComplete)
     };
 
-    
+    if (formIsComplete) {
+        sendReservation()
+    }
+
+    async function sendReservation() {
+        const isReserved = await NewReservation(reservation)
+
+        if (isReserved) {
+            alert('Merci pour votre reservation')
+            toggleModals('close')
+        } else {
+            alert("Oops une erreur s'est produite")
+        }
+
+        setLoading(false)
+    }
+
     const closeModal = () => {
         setValidation("")
         toggleModals('close')

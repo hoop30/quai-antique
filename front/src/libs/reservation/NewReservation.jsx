@@ -1,6 +1,5 @@
 export default async function NewReservation(reservation) {
 
-
     const newReservation = JSON.stringify(reservation)
 
     const params = {
@@ -10,4 +9,7 @@ export default async function NewReservation(reservation) {
     }
 
     return fetch('http://localhost:5000/reservation', params)
+        .then(response => { return response.json() })
+        .then(() => true)
+        .catch(() => false)
 }
