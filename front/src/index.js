@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { UserContextProvider } from './context/UserContext';
 import { UserModalContextProvider } from './context/UserModalContext';
 
+import ReservationModalContextProvider from './context/ReservationModalContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +15,9 @@ root.render(
     <BrowserRouter>
       <UserContextProvider>
         <UserModalContextProvider>
-          <App />
+          <ReservationModalContextProvider>
+            <App />
+          </ReservationModalContextProvider>
         </UserModalContextProvider>
       </UserContextProvider>
     </BrowserRouter>

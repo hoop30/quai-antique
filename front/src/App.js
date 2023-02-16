@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import PrivateRoute from './pages/private/PrivateRoute ';
 import Admin from './pages/private/modification/Admin';
 import Compte from './pages/compte/Compte';
+import ReservationModal from './components/ReservationModal';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       <SignInModal />
       <SignUpModal />
       <UserModal />
+      <ReservationModal />
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />

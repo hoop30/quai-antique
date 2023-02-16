@@ -74,6 +74,39 @@
                 background: var(--white);
                 width: 100%;
                 padding: 5px;
+
+            }
+            
+            fieldset {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                .hour-select {
+                    display: flex;
+                    gap: 5px;
+
+                    .hour {
+                        background: var(--darkBrown);
+                        color: var(--blackBean);
+                        padding: 0 5px;
+                        font-family: 'Mukta Vaani', sans-serif;
+                        font-size: 14px;
+                        font-weight: 700;
+                        border-radius: 5px;
+                        cursor: pointer;
+
+                        &:hover {
+                            transform: scale(1.1);
+                        }
+
+                        &.selected {
+                            background: var(--blackBean);
+                            color: var(--darkBrown);
+                        }
+                    }
+                }
+
             }
         }
 

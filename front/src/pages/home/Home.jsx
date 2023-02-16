@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import restaurant from '../../assets/img/quai-antique.jpg'
+import { ReservationModalContext } from '../../context/ReservationModalContext'
 
-export default function Home() {
-
+    
+    export default function Home() {
+        
+    const { toggleModals } = useContext(ReservationModalContext)
 
     return (
         <>
@@ -43,7 +46,7 @@ export default function Home() {
                     <p>
                         Venez découvrir la gastronomie savoyarde authentique, dans un cadre intime et chaleureux, au Quai Antique. Réservez votre table et profitez d'une expérience culinaire unique !
                     </p>
-                    <button>
+                    <button onClick={() => toggleModals('firstForm')}>
                         <h2>Réservez</h2>
                     </button>
                 </article>
