@@ -1,17 +1,32 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { IoCloseOutline } from 'react-icons/io5'
 import Loading from "./Loading";
 import { ReservationModalContext } from "../context/ReservationModalContext";
 import TimeFormat from "../utils/TimeFormat";
 import NewReservation from "../libs/reservation/NewReservation";
+import GetOpenHours from "../libs/openHours/GetOpenHours";
+import OpenToCloseHour from "../utils/OpenToCloseHour";
 
 export default function ReservationModal() {
 
     const { currentUser } = useContext(UserContext)
     const { ReservationModal, toggleModals } = useContext(ReservationModalContext)
     const [validation, setValidation] = useState("")
+    const [openHours, setOpenHours] = useState({})
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        getResource()
+    }, [])
+
+    async function getResource() {
+
+        const resource = await GetOpenHours()
+        const openToClose = OpenToCloseHour(resource)
+        console.log('openToClose : ', openToClose);
+        setOpenHours(openToClose)
+    }
 
     // Send form and reset input value, or show error message
     async function firstForm(e) {
@@ -49,20 +64,6 @@ export default function ReservationModal() {
     const closeModal = () => {
         setValidation("")
         toggleModals('close')
-    }
-
-    function hourSelect(e) {
-        const hours = document.querySelectorAll('.hour')
-
-        hours.forEach(el => {
-            if (el.classList.contains('selected')) {
-                el.classList.remove('selected')
-            }
-        });
-
-        if (!e.target.classList.contains('selected')) {
-            e.target.classList.add('selected')
-        }
     }
 
     return (
@@ -107,13 +108,11 @@ export default function ReservationModal() {
                                     <fieldset>
                                         <label htmlFor="hour">Midi</label>
                                         <div className="hour-select">
-                                            <div className="hour" onClick={hourSelect}>{TimeFormat(new Date(0, 0, 0, 12, 15, 0))}</div>
-                                            <div className="hour" onClick={hourSelect}>{TimeFormat(new Date(0, 0, 0, 12, 30, 0))}</div>
+                                            {openHours && openHours.noon}
                                         </div>
                                         <label htmlFor="hour">Soir</label>
                                         <div className="hour-select">
-                                            <div className="hour" onClick={hourSelect}>{TimeFormat(new Date(0, 0, 0, 19, 30, 0))}</div>
-                                            <div className="hour" onClick={hourSelect}>{TimeFormat(new Date(0, 0, 0, 19, 45, 0))}</div>
+                                            {openHours && openHours.evening}
                                         </div>
                                     </fieldset>
                                 </div>
