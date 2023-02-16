@@ -14,8 +14,8 @@ export function UserContextProvider(props) {
   }, [])
   
   function update() {
-    if (localStorage.getItem('userId')) {
-      stayConnect(localStorage.getItem('userId'))
+    if (sessionStorage.getItem('userId')) {
+      stayConnect(sessionStorage.getItem('userId'))
     } else {
       setLoadingData(false)
     }
@@ -31,18 +31,18 @@ export function UserContextProvider(props) {
       reservation: user.Reservation,
       roles: user.roles
     })
-    localStorage.setItem('userId', user.id);
+    sessionStorage.setItem('userId', user.id);
     setLoadingData(false)
   }
   // stay connect
   async function stayConnect(id) {
-    connection(await GetUserById(localStorage.getItem('userId')))
+    connection(await GetUserById(sessionStorage.getItem('userId')))
   }
 
   //disconnect user
   function disconnect() {
     setCurrentUser(null)
-    localStorage.removeItem('userId');
+    sessionStorage.removeItem('userId');
   }
 
   // Modal show state
