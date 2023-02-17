@@ -14,21 +14,20 @@ class Dish
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('dishs')]
+    #[Groups(['dishs', 'menus and dishs'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('dishs')]
+    #[Groups(['dishs', 'menus and dishs'])]
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('dishs')]
+    #[Groups(['dishs', 'menus and dishs'])]
     private ?string $name = null;
 
     #[ORM\Column]
     #[Groups('dishs')]
     private ?float $price = null;
-
     #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'Dish')]
     private Collection $Menu;
 

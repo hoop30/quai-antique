@@ -3,7 +3,6 @@ import { UserContext } from "../context/UserContext";
 import { IoCloseOutline } from 'react-icons/io5'
 import Loading from "./Loading";
 import { ReservationModalContext } from "../context/ReservationModalContext";
-import TimeFormat from "../utils/TimeFormat";
 import NewReservation from "../libs/reservation/NewReservation";
 import GetOpenHours from "../libs/openHours/GetOpenHours";
 import OpenToCloseHour from "../utils/OpenToCloseHour";
@@ -24,7 +23,6 @@ export default function ReservationModal() {
 
         const resource = await GetOpenHours()
         const openToClose = OpenToCloseHour(resource)
-        console.log('openToClose : ', openToClose);
         setOpenHours(openToClose)
     }
 

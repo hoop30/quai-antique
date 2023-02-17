@@ -1,4 +1,4 @@
-export default function NewDish(form) {
+export default async function NewDish(form) {
 
     const newDish = {
         type: form.type.value,

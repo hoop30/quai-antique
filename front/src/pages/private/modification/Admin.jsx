@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import AddDishModal from '../../../components/AddDishModal'
-import AddHourModal from '../../../components/AddHourModal'
-import AddMenuModal from '../../../components/AddMenuModal'
+import AddDishModal from '../../../components/addModal/AddDishModal'
+import AddHourModal from '../../../components/addModal/AddHourModal'
+import AddMenuModal from '../../../components/addModal/AddMenuModal'
 import GetDays from '../../../libs/days/GetDays'
 import GetDish from '../../../libs/dish/GetDish'
 import GetMenu from '../../../libs/menu/GetMenu'
@@ -87,7 +87,7 @@ export default function Admin() {
 								<tr key={hour.id}>
 									<td>{hour.type === 'noon' ? 'Midi' : 'Soir'}</td>
 									<td>{TimeFormat(hour.open)}</td>
-									/
+									<td>/</td>
 									<td>{TimeFormat(hour.close)}</td>
 								</tr>
 							)}

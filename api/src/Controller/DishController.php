@@ -36,9 +36,9 @@ class DishController extends AbstractController
     {
         // add the data
         $data = $request->getContent();
-        // create a new user with the data
+        // create a new dish with the data
         $newDish = $serializer->deserialize($data, Dish::class, 'json');
-        // send new user to the DB
+        // send new dish to the DB
         $em->persist($newDish);
         $em->flush();
         // return the new user

@@ -25,14 +25,26 @@ class MenuController extends AbstractController
     {
         // add the data
         $data = $request->getContent();
-        
-        
-        // create a new user with the data
-        $newMenu = $serializer->deserialize($data, Menu::class, 'json');
-        
-        // add the dishs with Id
-        $dishId = json_decode($data)->Dish;
-        foreach ($dishId as $id) {
+        //dd($data);
+        // // create a new menu with the data
+        // $newMenu = $serializer->deserialize($data, Menu::class, 'json');
+        // // add the menu with Id
+        // $dishId = json_decode($data)->dish;
+        // foreach ($dishId as $id) {
+        //     $newMenu->addDish($dishRepository->find($id));
+        // }
+
+        $newMenu = new Menu();
+
+        $jsonData = json_decode($data);
+
+        $newMenu
+            ->setName($jsonData->name)
+            ->setPrice($jsonData->price)
+            ->setType($jsonData->type);
+
+        //dd($jsonData->dish);
+        foreach ($jsonData->dish as $id) {
             $newMenu->addDish($dishRepository->find($id));
         }
 
@@ -40,7 +52,7 @@ class MenuController extends AbstractController
         $em->persist($newMenu);
         $em->flush();
         // return the new user
-        return $this->json($newMenu, 201, []);
+        return $this->json('New Menu create', 201, [],);
     }
 
     #[Route('/menu', name: 'menu_update', methods:["PUT"])]

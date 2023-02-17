@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoCloseOutline } from 'react-icons/io5'
-import Loading from "./Loading";
+import Loading from "../Loading";
 
 export default function AddHourModal({ setAddModal }) {
 

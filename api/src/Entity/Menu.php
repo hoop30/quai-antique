@@ -14,22 +14,23 @@ class Menu
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('menus')]
+    #[Groups(['menus', 'menus and dishs'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('menus')]
+    #[Groups(['menus', 'menus and dishs'])]
     private ?string $name = null;
 
     #[ORM\Column]
-    #[Groups('menus')]
+    #[Groups(['menus', 'menus and dishs'])]
     private ?float $price = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('menus')]
+    #[Groups(['menus', 'menus and dishs'])]
     private ?string $type = null;
 
     #[ORM\ManyToMany(targetEntity: Dish::class, inversedBy: 'Menu')]
+    #[Groups('menus and dishs')]
     private Collection $Dish;
 
     public function __construct()

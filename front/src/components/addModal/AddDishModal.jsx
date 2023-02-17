@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoCloseOutline } from 'react-icons/io5'
-import NewDish from "../libs/dish/NewDish";
-import Loading from "./Loading";
+import NewDish from "../../libs/dish/NewDish";
+import Loading from "../Loading";
 
 export default function AddDishModal({ setAddModal, update }) {
 

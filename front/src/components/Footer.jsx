@@ -5,24 +5,24 @@ import TimeFormat from '../utils/TimeFormat'
 
 export default function Footer() {
 
-    const [hours, setHours] = useState()
+    const [noon, setNoon] = useState()
+    const [evening, setEvening] = useState()
     useEffect(() => {
         fetchHours()
     }, [])
-    
+
     async function fetchHours() {
         const newHours = await GetOpenHours()
         newHours.map(hour => {
             if (hour.type === 'noon') {
-                setHours({
-                    noonOpen: TimeFormat(hour.open),
-                    noonClose: TimeFormat(hour.close)
+                setNoon({
+                    open: TimeFormat(hour.open),
+                    close: TimeFormat(hour.close)
                 })
-            }
-            if (hour.type === 'evening') {
-                setHours({
-                    eveningOpen: TimeFormat(hour.open),
-                    eveningClose: TimeFormat(hour.close)
+            } else if (hour.type === 'evening') {
+                setEvening({
+                    open: TimeFormat(hour.open),
+                    close: TimeFormat(hour.close)
                 })
             }
         })
@@ -39,7 +39,7 @@ export default function Footer() {
                 <p><a href="/">Accueil</a></p>
             </div>
             <div className="footer-cta">
-                {hours && <p>Ouverture Toutes la semaine, le midi de {hours.noonOpen} à {hours.noonClose}. En soirée de {hours.eveningOpen} à {hours.eveningClose}</p>}
+                {noon && evening && <p>Ouverture Toutes la semaine, le midi de {noon.open} à {noon.close}. En soirée de {evening.open} à {evening.close}</p>}
                 <button><p>Réservez</p></button>
             </div>
         </footer>
