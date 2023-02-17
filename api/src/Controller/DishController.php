@@ -57,7 +57,6 @@ class DishController extends AbstractController
         // add the new data
         $data = $request->getContent();
         $updateDish = $serializer->deserialize($data, Dish::class, 'json');
-        // find the user to update
         $dish = $dishRepository->find($id);
         // update
         $dish

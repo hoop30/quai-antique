@@ -20,22 +20,18 @@ class MenuController extends AbstractController
         return $this->json($menuRepository->findAll(), 200, [], ['groups' => 'menus']);
     }
 
+    #[Route('/menu/{id}', name: 'menu_get_by_id', methods:["GET"])]
+    public function userGetById(MenuRepository $menuRepository, int $id)
+    {
+            return $this->json($menuRepository->find($id), 200, [], ['groups' => 'menus']);
+    }
+
     #[Route('/menu', name: 'menu_new', methods:["POST"])]
-    public function userPost(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, DishRepository $dishRepository)
+    public function userPost(Request $request, EntityManagerInterface $em, DishRepository $dishRepository)
     {
         // add the data
         $data = $request->getContent();
-        //dd($data);
-        // // create a new menu with the data
-        // $newMenu = $serializer->deserialize($data, Menu::class, 'json');
-        // // add the menu with Id
-        // $dishId = json_decode($data)->dish;
-        // foreach ($dishId as $id) {
-        //     $newMenu->addDish($dishRepository->find($id));
-        // }
-
         $newMenu = new Menu();
-
         $jsonData = json_decode($data);
 
         $newMenu
@@ -55,26 +51,28 @@ class MenuController extends AbstractController
         return $this->json('New Menu create', 201, [],);
     }
 
-    #[Route('/menu', name: 'menu_update', methods:["PUT"])]
-    public function userPut(Request $request, SerializerInterface $serializer, MenuRepository $menuRepository, EntityManagerInterface $em)
+    #[Route('/menu/{id}', name: 'menu_update', methods:["PUT"])]
+    public function userPut(Request $request, DishRepository $dishRepository, MenuRepository $menuRepository, EntityManagerInterface $em, int $id)
     {
         // add the new data
         $data = $request->getContent();
-        $updateMenu = $serializer->deserialize($data, Menu::class, 'json');
-        $id = $updateMenu->getId();
-        // find the user to update
+        $jsonData = json_decode($data);
+    
         $menu = $menuRepository->find($id);
         // update
         $menu
-        ->setType($updateMenu->getType())
-        ->setName($updateMenu->getName())
-        ->setPrice($updateMenu->getPrice());
+            ->setName($jsonData->name)
+            ->setPrice($jsonData->price)
+            ->setType($jsonData->type);
+        foreach ($jsonData->dish as $id) {
+            $menu->addDish($dishRepository->find($id));
+        }
         
         // update send in DB
         $em->persist($menu);
         $em->flush();
 
         // reurn the update user
-        return $this->json($menu, 201, []);
+        return $this->json($menu, 201, [], ['groups' => 'menus']);
     }
 }
