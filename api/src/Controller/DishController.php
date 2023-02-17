@@ -31,6 +31,12 @@ class DishController extends AbstractController
         }
     }
 
+    #[Route('/dish/{id}', name: 'dish_get_by_id', methods:["GET"])]
+    public function userGetById(DishRepository $dishRepository, int $id)
+    {
+            return $this->json($dishRepository->find($id), 200, [], ['groups' => 'dishs']);
+    }
+
     #[Route('/dish', name: 'dish_new', methods:["POST"])]
     public function userPost(Request $request, SerializerInterface $serializer, EntityManagerInterface $em)
     {
@@ -45,26 +51,25 @@ class DishController extends AbstractController
         return $this->json($newDish, 201, []);
     }
 
-    #[Route('/dish', name: 'dish_update', methods:["PUT"])]
-    public function userPut(Request $request, SerializerInterface $serializer, DishRepository $dishRepository, EntityManagerInterface $em)
+    #[Route('/dish/{id}', name: 'dish_update', methods:["PUT"])]
+    public function userPut(Request $request, SerializerInterface $serializer, DishRepository $dishRepository, EntityManagerInterface $em, int $id)
     {
         // add the new data
         $data = $request->getContent();
         $updateDish = $serializer->deserialize($data, Dish::class, 'json');
-        $id = $updateDish->getId();
         // find the user to update
         $dish = $dishRepository->find($id);
         // update
         $dish
-        ->setType($updateDish->getType())
-        ->setName($updateDish->getName())
-        ->setPrice($updateDish->getPrice());
+            ->setType($updateDish->getType())
+            ->setName($updateDish->getName())
+            ->setPrice($updateDish->getPrice());
         
         // update send in DB
         $em->persist($dish);
         $em->flush();
 
         // reurn the update user
-        return $this->json($dish, 201, []);
+        return $this->json($dish, 201, [], ['groups' => 'dishs']);
     }
 }

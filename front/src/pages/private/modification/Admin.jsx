@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import AddDishModal from '../../../components/addModal/AddDishModal'
 import AddHourModal from '../../../components/addModal/AddHourModal'
 import AddMenuModal from '../../../components/addModal/AddMenuModal'
+import UpdateDishModal from '../../../components/updateModal/UpdateDishModal'
 import GetDays from '../../../libs/days/GetDays'
 import GetDish from '../../../libs/dish/GetDish'
+import UpdateDish from '../../../libs/dish/UpdateDish'
 import GetMenu from '../../../libs/menu/GetMenu'
 import GetOpenHours from '../../../libs/openHours/GetOpenHours'
 import DaysFormat from '../../../utils/DaysFormat'
@@ -17,6 +19,8 @@ export default function Admin() {
 	const [days, setDays] = useState()
 	const [openHours, setOpenHours] = useState()
 	const [addModal, setAddModal] = useState(null)
+	const [updateModal, setUpdateModal] = useState(null)
+	const [idUpdate, setIdUpdate] = useState(null)
 
 	useEffect(() => {
 		getResourses()
@@ -32,6 +36,10 @@ export default function Admin() {
 	function onSetAddModal(type) {
 		setAddModal(type)
 	}
+	function onSetUpdateModal(type, id) {
+		setIdUpdate(id)
+		setUpdateModal(type)
+	}
 
 	return (
 		<div className='admin'>
@@ -46,6 +54,7 @@ export default function Admin() {
 								<td>{dish.type}</td>
 								<td>{dish.name}</td>
 								<td>{FormatPrice(dish.price)}</td>
+								<td><button onClick={() => onSetUpdateModal('dish', dish.id)}>Modifier</button></td>
 							</tr>
 						)}
 					</tbody>
@@ -99,6 +108,9 @@ export default function Admin() {
 			{addModal === 'dish' ? <AddDishModal setAddModal={onSetAddModal} update={getResourses} /> : null}
 			{addModal === 'menu' ? <AddMenuModal setAddModal={onSetAddModal} update={getResourses} /> : null}
 			{addModal === 'hour' ? <AddHourModal setAddModal={onSetAddModal} update={getResourses} /> : null}
+			{updateModal === 'dish' ? <UpdateDishModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null}
+			{/* {updateModal === 'menu' ? <UpdateDishModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null}
+			{updateModal === 'hour' ? <UpdateDishModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null} */}
 		</div>
 	)
 }
