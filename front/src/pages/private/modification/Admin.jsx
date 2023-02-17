@@ -8,12 +8,15 @@ import UpdateHoursModal from '../../../components/updateModal/UpdateHoursModal'
 import UpdateMenuModal from '../../../components/updateModal/UpdateMenuModal'
 import GetDays from '../../../libs/days/GetDays'
 import GetDish from '../../../libs/dish/GetDish'
-import UpdateDish from '../../../libs/dish/UpdateDish'
 import GetMenu from '../../../libs/menu/GetMenu'
 import GetOpenHours from '../../../libs/openHours/GetOpenHours'
 import DaysFormat from '../../../utils/DaysFormat'
 import { FormatPrice } from '../../../utils/PriceFormat'
 import TimeFormat from '../../../utils/TimeFormat'
+import { FiTrash2 } from 'react-icons/fi'
+import DeleteDish from '../../../libs/dish/DeleteDish'
+import DeleteMenu from '../../../libs/menu/DeleteMenu'
+import Loading from '../../../components/Loading'
 
 export default function Admin() {
 
@@ -24,6 +27,7 @@ export default function Admin() {
 	const [addModal, setAddModal] = useState(null)
 	const [updateModal, setUpdateModal] = useState(null)
 	const [idUpdate, setIdUpdate] = useState(null)
+    const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		getResourses()
@@ -43,11 +47,26 @@ export default function Admin() {
 		setIdUpdate(id)
 		setUpdateModal(type)
 	}
+	async function handleDelete(type, id) {
+		setLoading(true)
+		switch (type) {
+			case 'dish':
+				await DeleteDish(id)
+				break;
+			case 'menu':
+				await DeleteMenu(id)
+				break;
+			default:
+				break;
+		}
+
+		setLoading(false)
+		getResourses()
+	}
 
 	return (
 		<div className='admin'>
 			<h2>Page Administration</h2>
-
 			<section>
 				<h3>Plats</h3>
 				<table>
@@ -58,6 +77,10 @@ export default function Admin() {
 								<td>{dish.name}</td>
 								<td>{FormatPrice(dish.price)}</td>
 								<td><button onClick={() => onSetUpdateModal('dish', dish.id)}>Modifier</button></td>
+								<td>{loading ? 
+									<Loading /> 
+									: <button onClick={() => handleDelete('dish', dish.id)}><FiTrash2 /></button>}
+								</td>
 							</tr>
 						)}
 					</tbody>
@@ -74,6 +97,10 @@ export default function Admin() {
 								<td>{FormatPrice(menu.price)}</td>
 								<td>{menu.type}</td>
 								<td><button onClick={() => onSetUpdateModal('menu', menu.id)}>Modifier</button></td>
+								<td>{loading ? 
+									<Loading /> 
+									: <button onClick={() => handleDelete('menu', menu.id)}><FiTrash2 /></button>}
+								</td>
 							</tr>
 						)}
 					</tbody>

@@ -71,4 +71,14 @@ class DishController extends AbstractController
         // reurn the update user
         return $this->json($dish, 201, [], ['groups' => 'dishs']);
     }
+
+    #[Route('/dish/remove/{id}', name: 'dish_remove', methods:["GET"])]
+    public function menuRemove(DishRepository $dishRepository, EntityManagerInterface $em, int $id)
+    {
+        $dish = $dishRepository->find($id);
+        $em->remove($dish);
+        $em->flush();
+
+        return $this->json('Remove', 200, []);
+    }
 }

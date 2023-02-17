@@ -75,4 +75,14 @@ class MenuController extends AbstractController
         // reurn the update user
         return $this->json($menu, 201, [], ['groups' => 'menus']);
     }
+
+    #[Route('/menu/remove/{id}', name: 'menu_remove', methods:["GET"])]
+    public function menuRemove(MenuRepository $menuRepository, EntityManagerInterface $em, int $id)
+    {
+        $menu = $menuRepository->find($id);
+        $em->remove($menu);
+        $em->flush();
+
+        return $this->json('Remove', 200, []);
+    }
 }
