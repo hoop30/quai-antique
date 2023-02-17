@@ -1,20 +1,62 @@
 import React, { useState } from "react";
 import { IoCloseOutline } from 'react-icons/io5'
+import NewDays from "../../libs/days/NewDays";
+import NewOpenHours from "../../libs/openHours/NewOpenHours";
 import Loading from "../Loading";
 
-export default function AddHourModal({ setAddModal }) {
+export default function AddHourModal({ setAddModal, update }) {
 
     const [validation, setValidation] = useState("")
-    const [loading, setLoading] = useState(false);
+    const [loadingDays, setLoadingDays] = useState(false);
+    const [loadingHours, setLoadingHours] = useState(false);
 
     // Send form and reset input value, or show error message
-    async function handleForm(e) {
+    async function daysSubmit(e) {
         e.preventDefault()
-        setLoading(true)
+        setLoadingDays(true)
+    
+        const form = document.newDays
 
+        const isValid = await NewDays(form)
+
+        if (isValid === true) {
+            setValidation("")
+            closeModal()
+            setLoadingDays(false)
+            update()
+            return
+        } else if (typeof isValid === 'string') {
+            setValidation(isValid)
+            setLoadingDays(false)
+            return
+        }
 
         setValidation("Oops, une erreur c'est produite!")
-        setLoading(false)
+        setLoadingDays(false)
+    };
+
+    async function hoursSubmit(e) {
+        e.preventDefault()
+        setLoadingHours(true)
+
+        const form = document.newHours
+
+        const isValid = await NewOpenHours(form)
+
+        if (isValid === true) {
+            setValidation("")
+            closeModal()
+            setLoadingHours(false)
+            update()
+            return
+        } else if (typeof isValid === 'string') {
+            setValidation(isValid)
+            setLoadingHours(false)
+            return
+        }
+
+        setValidation("Oops, une erreur c'est produite!")
+        setLoadingHours(false)
     };
 
     const closeModal = () => {
@@ -38,10 +80,10 @@ export default function AddHourModal({ setAddModal }) {
                             <IoCloseOutline size="2.5em" />
                         </button>
 
-                        <form onSubmit={handleForm} className="sign-up-form" name='update'>
+                        <form onSubmit={daysSubmit} className="sign-up-form" name='newDays'>
                             <div className="input">
                                 <label>Jour</label>
-                                <select name="Dish" required>
+                                <select name="value" required>
                                     <option value="Lundi">Lundi</option>
                                     <option value="Mardi">Mardi</option>
                                     <option value="Mercredi">Mercredi</option>
@@ -51,7 +93,7 @@ export default function AddHourModal({ setAddModal }) {
                                     <option value="Dimanche">Dimanche</option>
                                 </select>
                                 <label>Ouverture ?</label>
-                                <select name="Dish" required>
+                                <select name="type" required>
                                     <option value="open">Toute la journée</option>
                                     <option value="noon">Midi uniquement</option>
                                     <option value="evening">Soir uniquement</option>
@@ -61,15 +103,15 @@ export default function AddHourModal({ setAddModal }) {
                             
                             <p className="text-danger mt-1">{validation}</p>
 
-                            {loading ? <Loading /> : <button className="btn-signin">Envoyer</button>}
+                            {loadingDays ? <Loading /> : <button className="btn-signin">Envoyer</button>}
 
                         </form>
 
-                        <form onSubmit={handleForm} className="sign-up-form" name='update'>
+                        <form onSubmit={hoursSubmit} className="sign-up-form" name='newHours'>
 
                             <div className="input">
                                 <label>Horraire</label>
-                                <select name="Dish" required>
+                                <select name="type" required>
                                     <option value="noon">Midi</option>
                                     <option value="evening">Soir</option>
                                 </select>
@@ -91,7 +133,7 @@ export default function AddHourModal({ setAddModal }) {
 
                             <p className="text-danger mt-1">{validation}</p>
 
-                            {loading ? <Loading /> : <button className="btn-signin">Envoyer</button>}
+                            {loadingHours ? <Loading /> : <button className="btn-signin">Envoyer</button>}
                         </form>
 
                     </div>
