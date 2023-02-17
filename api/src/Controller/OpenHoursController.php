@@ -19,6 +19,12 @@ class OpenHoursController extends AbstractController
         return $this->json($onpenHoursRepository->findAll(), 200, []);
     }
 
+    #[Route('/openhours/{id}', name: 'days_get_by_id', methods:["GET"])]
+    public function userGetById(OpenHoursRepository $onpenHoursRepository, int $id)
+    {
+            return $this->json($onpenHoursRepository->find($id), 200, []);
+    }
+
     #[Route('/openhours', name: 'onpenhours_new', methods: ["POST"])]
     public function userPost(Request $request, SerializerInterface $serializer, EntityManagerInterface $em)
     {
@@ -33,18 +39,15 @@ class OpenHoursController extends AbstractController
         return $this->json($newOnpenhours, 201, []);
     }
 
-    #[Route('/openhours', name: 'onpenhours_update', methods: ["PUT"])]
-    public function userPut(Request $request, SerializerInterface $serializer, OpenHoursRepository $onpenHoursRepository, EntityManagerInterface $em)
+    #[Route('/openhours/{id}', name: 'onpenhours_update', methods: ["PUT"])]
+    public function userPut(Request $request, SerializerInterface $serializer, OpenHoursRepository $onpenHoursRepository, EntityManagerInterface $em, int $id)
     {
         // add the new data
         $data = $request->getContent();
         $updateOpenHours = $serializer->deserialize($data, OpenHours::class, 'json');
-        $id = $updateOpenHours->getId();
-        // find the user to update
         $openHours = $onpenHoursRepository->find($id);
         // update
         $openHours
-            ->setType($updateOpenHours->getType())
             ->setOpen($updateOpenHours->getOpen())
             ->setClose($updateOpenHours->getClose());
 

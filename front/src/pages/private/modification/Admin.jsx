@@ -4,6 +4,7 @@ import AddHourModal from '../../../components/addModal/AddHourModal'
 import AddMenuModal from '../../../components/addModal/AddMenuModal'
 import UpdateDaysModal from '../../../components/updateModal/UpdateDaysModal'
 import UpdateDishModal from '../../../components/updateModal/UpdateDishModal'
+import UpdateHoursModal from '../../../components/updateModal/UpdateHoursModal'
 import UpdateMenuModal from '../../../components/updateModal/UpdateMenuModal'
 import GetDays from '../../../libs/days/GetDays'
 import GetDish from '../../../libs/dish/GetDish'
@@ -101,6 +102,7 @@ export default function Admin() {
 									<td>{TimeFormat(hour.open)}</td>
 									<td>/</td>
 									<td>{TimeFormat(hour.close)}</td>
+									<td><button onClick={() => onSetUpdateModal('hours', hour.id)}>Modifier</button></td>
 								</tr>
 							)}
 						</tbody>
@@ -114,6 +116,7 @@ export default function Admin() {
 			{updateModal === 'dish' ? <UpdateDishModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null}
 			{updateModal === 'menu' ? <UpdateMenuModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null}
 			{updateModal === 'days' ? <UpdateDaysModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null}
+			{updateModal === 'hours' ? <UpdateHoursModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null}
 		</div>
 	)
 }

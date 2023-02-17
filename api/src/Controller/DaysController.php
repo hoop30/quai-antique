@@ -48,7 +48,6 @@ class DaysController extends AbstractController
         $days = $daysRepository->find($id);
         // update
         $days
-            ->setValue($updateDays->getValue())
             ->setType($updateDays->getType());
 
         // update send in DB
