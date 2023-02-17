@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AddDishModal from '../../../components/addModal/AddDishModal'
 import AddHourModal from '../../../components/addModal/AddHourModal'
 import AddMenuModal from '../../../components/addModal/AddMenuModal'
+import UpdateDaysModal from '../../../components/updateModal/UpdateDaysModal'
 import UpdateDishModal from '../../../components/updateModal/UpdateDishModal'
 import UpdateMenuModal from '../../../components/updateModal/UpdateMenuModal'
 import GetDays from '../../../libs/days/GetDays'
@@ -89,7 +90,7 @@ export default function Admin() {
 					</div>
 					<ul className='days-display'>
 						{days && days.map(day =>
-							DaysFormat(day)
+							DaysFormat(day, onSetUpdateModal)
 						)}
 					</ul>
 					<table>
@@ -112,7 +113,7 @@ export default function Admin() {
 			{addModal === 'hour' ? <AddHourModal setAddModal={onSetAddModal} update={getResourses} /> : null}
 			{updateModal === 'dish' ? <UpdateDishModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null}
 			{updateModal === 'menu' ? <UpdateMenuModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null}
-			{/* {updateModal === 'hour' ? <UpdateDishModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null} */}
+			{updateModal === 'days' ? <UpdateDaysModal setUpdateModal={onSetUpdateModal} id={idUpdate} update={getResourses} /> : null}
 		</div>
 	)
 }

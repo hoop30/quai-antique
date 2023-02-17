@@ -19,6 +19,12 @@ class DaysController extends AbstractController
         return $this->json($daysRepository->findAll(), 200, []);
     }
 
+    #[Route('/days/{id}', name: 'days_get_by_id', methods:["GET"])]
+    public function userGetById(DaysRepository $daysRepository, int $id)
+    {
+            return $this->json($daysRepository->find($id), 200, []);
+    }
+
     #[Route('/days', name: 'days_new', methods: ["POST"])]
     public function userPost(Request $request, SerializerInterface $serializer, EntityManagerInterface $em)
     {
@@ -33,14 +39,12 @@ class DaysController extends AbstractController
         return $this->json($newDays, 201, []);
     }
 
-    #[Route('/days', name: 'days_update', methods: ["PUT"])]
-    public function userPut(Request $request, SerializerInterface $serializer, DaysRepository $daysRepository, EntityManagerInterface $em)
+    #[Route('/days/{id}', name: 'days_update', methods: ["PUT"])]
+    public function userPut(Request $request, SerializerInterface $serializer, DaysRepository $daysRepository, EntityManagerInterface $em, int $id)
     {
         // add the new data
         $data = $request->getContent();
         $updateDays = $serializer->deserialize($data, Days::class, 'json');
-        $id = $updateDays->getId();
-        // find the user to update
         $days = $daysRepository->find($id);
         // update
         $days

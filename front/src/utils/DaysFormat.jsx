@@ -1,4 +1,4 @@
-export default function DaysFormat(day) {
+export default function DaysFormat(day, onSetUpdateModal) {
     
     let dayClass
     
@@ -17,5 +17,5 @@ export default function DaysFormat(day) {
             break;
     }
     
-    return <li className={dayClass} key={day.id}>{day.value}</li>
+    return <li className={dayClass} key={day.id}><button onClick={() => onSetUpdateModal('days', day.id)}>{day.value}</button></li>
 }
